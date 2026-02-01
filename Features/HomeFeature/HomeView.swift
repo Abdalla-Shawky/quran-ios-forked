@@ -44,22 +44,27 @@ private struct HomeViewUI: View {
     let surahSortOrder: SurahSortOrder
 
     var body: some View {
-        NoorList {
-            NoorSection(title: lAndroid("recent_pages"), lastPages) { lastPage in
-                lastPageView(lastPage)
-            }
+        ZStack {
+            Color("secondaryColor").ignoresSafeArea()
+            NoorList {
+                NoorSection(title: lAndroid("recent_pages"), lastPages) { lastPage in
+                    lastPageView(lastPage)
+                }
 
-            switch type {
-            case .suras:
-                sectionsView(items: suras, groupBy: \.page.startJuz) { sura in
-                    suraView(sura)
-                }
-            case .juzs:
-                sectionsView(items: quarters, groupBy: \.quarter.juz) { quarter in
-                    quarterView(quarter)
+                switch type {
+                case .suras:
+                    sectionsView(items: suras, groupBy: \.page.startJuz) { sura in
+                        suraView(sura)
+                    }
+                case .juzs:
+                    sectionsView(items: quarters, groupBy: \.quarter.juz) { quarter in
+                        quarterView(quarter)
+                    }
                 }
             }
+            .listRowBackground(Color.clear)
         }
+        .modifier(ListBackgroundHider())
         .task { await start() }
     }
 
@@ -131,6 +136,16 @@ private struct HomeViewUI: View {
             NoorSection(title: juz.localizedName, items) { item in
                 listItem(item)
             }
+        }
+    }
+}
+
+private struct ListBackgroundHider: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content.scrollContentBackground(.hidden)
+        } else {
+            content
         }
     }
 }

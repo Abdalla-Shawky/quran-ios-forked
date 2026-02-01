@@ -33,14 +33,14 @@ public struct HomeBuilder {
         let viewModel = HomeViewModel(
             lastPageService: lastPageService,
             textRetriever: textRetriever,
-            navigateToPage: { [weak listener] lastPage in
-                listener?.navigateTo(page: lastPage, lastPage: lastPage, highlightingSearchAyah: nil)
+            navigateToPage: { lastPage in
+                listener.navigateTo(page: lastPage, lastPage: lastPage, highlightingSearchAyah: nil)
             },
-            navigateToSura: { [weak listener] sura in
-                listener?.navigateTo(page: sura.page, lastPage: nil, highlightingSearchAyah: nil)
+            navigateToSura: { sura in
+                listener.navigateTo(page: sura.page, lastPage: nil, highlightingSearchAyah: nil)
             },
-            navigateToQuarter: { [weak listener] quarter in
-                listener?.navigateTo(page: quarter.page, lastPage: nil, highlightingSearchAyah: nil)
+            navigateToQuarter: { quarter in
+                listener.navigateTo(page: quarter.page, lastPage: nil, highlightingSearchAyah: nil)
             }
         )
         let viewController = HomeViewController(
