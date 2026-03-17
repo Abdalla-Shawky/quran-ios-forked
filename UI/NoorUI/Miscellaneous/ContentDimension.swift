@@ -16,7 +16,7 @@ public enum ContentDimension {
 
     public static func insets(of view: UIView) -> NSDirectionalEdgeInsets {
         let readableInsets = view.window?.safeAreaInsets ?? .zero
-        let topInset = max(24, readableInsets.top)
+        let topInset = max(8, readableInsets.top)
         return NSDirectionalEdgeInsets(
             top: topInset + spacing,
             leading: readableInsets.left + spacing,
@@ -27,7 +27,7 @@ public enum ContentDimension {
 
     public static func readableInsets(of safeAreaInsets: EdgeInsets) -> EdgeInsets {
         EdgeInsets(
-            top: max(24, safeAreaInsets.top) + spacing,
+            top: max(8, safeAreaInsets.top) + spacing,
             leading: safeAreaInsets.leading + spacing,
             bottom: safeAreaInsets.bottom + spacing,
             trailing: safeAreaInsets.trailing + spacing
@@ -36,5 +36,5 @@ public enum ContentDimension {
 
     // MARK: Internal
 
-    static let spacing: CGFloat = 8
+    static let spacing: CGFloat = 2
 }
