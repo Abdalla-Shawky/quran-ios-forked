@@ -41,6 +41,23 @@ public func l(_ key: String, table: Table = .localizable, language: Language? = 
     if let language {
         return localizedString(key, table: table, language: language)
     }
+
+    // Read AppleLanguages directly from UserDefaults to support runtime
+    // language changes. NSLocalizedString caches the process-start language
+    // and may not pick up mid-process updates to AppleLanguages.
+    if let preferred = UserDefaults.standard.stringArray(forKey: "AppleLanguages"),
+       let code = preferred.first {
+        let baseCode = String(code.prefix(while: { $0 != "-" && $0 != "_" }))
+        if let path = Bundle.fixedModule.path(forResource: baseCode, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            let value = NSLocalizedString(key, tableName: table.rawValue, bundle: bundle, comment: "")
+            if value != key || baseCode == "en" {
+                return value
+            }
+            return localizedString(key, table: table, language: .english)
+        }
+    }
+
     let value = NSLocalizedString(key, tableName: table.rawValue, bundle: Bundle.fixedModule, comment: "")
     if value != key || NSLocale.preferredLanguages.first == "en" {
         return value
