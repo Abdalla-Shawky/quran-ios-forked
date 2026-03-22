@@ -86,7 +86,7 @@ private struct ReadingSelectorUI<Value: Hashable, ImageView: View>: View {
             )
         }
         .background(
-            Color.systemGroupedBackground
+            Color.appBackground
                 .edgesIgnoringSafeArea(.all)
         )
         .task { await start() }

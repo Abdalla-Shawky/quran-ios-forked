@@ -89,7 +89,7 @@ struct ReadingDetails<Value: Hashable, ImageView: View>: View {
             HStack {
                 Spacer()
                 Text(l("reading.selector.selectMushaf.long"))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(.systemBackground))
                 Spacer()
             }
             .padding()

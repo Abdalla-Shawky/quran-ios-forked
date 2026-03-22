@@ -20,7 +20,7 @@ public struct ActiveRoundedButton: View {
     public var body: some View {
         AsyncButton(action: action) {
             Text(label)
-                .foregroundColor(.white)
+                .foregroundColor(Color(.systemBackground))
                 .padding(.vertical, 5)
                 .padding(.horizontal, 10)
                 .background(

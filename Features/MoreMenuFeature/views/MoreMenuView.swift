@@ -37,6 +37,7 @@ private struct MoreMenuRootView: View {
                 VStack(spacing: 0) {
                     viewBasedOn(state.mode) {
                         MoreMenuModeSelector(mode: $store.mode)
+                            .background(Color.appRowBackground)
                     }
 
                     viewBasedOn(state.translationsSelection, customCondition: store.mode == .translation) {
@@ -47,17 +48,17 @@ private struct MoreMenuRootView: View {
                                 .contentShape(Rectangle())
                         }
                         .buttonStyle(BackgroundHighlightingStyle())
-                        .background(Color.systemBackground)
+                        .background(Color.appRowBackground)
 
                         empty
                     }
 
                     viewBasedOn(state.wordPointer, customCondition: store.mode == .arabic) {
                         MoreMenuWordPointer(enabled: $store.wordPointerEnabled)
-                            .background(Color.systemBackground)
+                            .background(Color.appRowBackground)
                         if store.wordPointerEnabled {
                             divider
-                                .background(Color.systemBackground)
+                                .background(Color.appRowBackground)
                             Button {
                                 showWordPointerSelection()
                             } label: {
@@ -65,25 +66,26 @@ private struct MoreMenuRootView: View {
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(BackgroundHighlightingStyle())
-                            .background(Color.systemBackground)
+                            .background(Color.appRowBackground)
                         }
                         empty
                     }
 
                     viewBasedOn(state.orientation, customCondition: store.mode == .arabic) {
                         MoreMenuDeviceRotation()
-                            .background(Color.systemBackground)
+                            .background(Color.appRowBackground)
                         empty
                     }
 
                     viewBasedOn(state.twoPages) {
                         MoreMenuTwoPages(enabled: $store.twoPagesEnabled)
-                            .background(Color.systemBackground)
+                            .background(Color.appRowBackground)
                         empty
                     }
 
                     viewBasedOn(state.verticalScrolling) {
                         MoreMenuVerticalScrolling(enabled: $store.verticalScrollingEnabled)
+                            .background(Color.appRowBackground)
                     }
 
                     viewBasedOn(state.theme) {
@@ -91,6 +93,7 @@ private struct MoreMenuRootView: View {
                     }
                 }
             }
+            .background(Color.appBackground)
         }
     }
 
@@ -141,7 +144,7 @@ private struct MoreMenuRootView: View {
     }
 
     private func showWordPointerSelection() {
-        navigator?.push(configuration: .init(backgroundColor: .systemBackground)) {
+        navigator?.push(configuration: .init(backgroundColor: UIColor(Color.appRowBackground))) {
             WordPointerSelection(store: store)
         }
     }

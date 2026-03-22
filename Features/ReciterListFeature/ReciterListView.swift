@@ -50,15 +50,11 @@ private struct ReciterListViewUI: View {
             if standalone {
                 CocoaNavigationView {
                     content
-                        .background(Color.blue)
                 }
-                .background(Color.yellow)
             } else {
                 content
-                    .background(Color.green)
             }
         }
-        .background(Color.red)
     }
 
     // MARK: Private

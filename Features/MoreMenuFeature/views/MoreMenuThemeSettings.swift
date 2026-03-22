@@ -71,7 +71,7 @@ struct MoreMenuThemeSettingsMenuItem: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(BackgroundHighlightingStyle())
-        .background(Color.systemBackground)
+        .background(Color.appRowBackground)
         UIViewControllerReader(viewController: $viewController)
     }
 
@@ -188,7 +188,7 @@ private struct MoreMenuThemeSettingsView: View {
                 .padding()
             }
         }
-        .background(.thickMaterial)
+        .background(Color.appBackground)
     }
 }
 
