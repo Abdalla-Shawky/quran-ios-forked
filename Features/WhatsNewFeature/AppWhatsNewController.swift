@@ -9,6 +9,7 @@
 import Analytics
 import Localization
 import NoorUI
+import SwiftUI
 import UIKit
 import VLogging
 import WhatsNewKit
@@ -64,7 +65,7 @@ public class AppWhatsNewController {
         configuration.titleView.titleMode = .scrolls
 
         configuration.tintColor = .appIdentity
-        configuration.backgroundColor = .systemBackground
+        configuration.backgroundColor = UIColor(Color.appBackground)
         configuration.titleView.titleColor = .label
         configuration.itemsView.titleColor = .label
         configuration.itemsView.subtitleColor = .secondaryLabel

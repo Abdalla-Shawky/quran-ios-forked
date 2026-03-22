@@ -12,10 +12,27 @@ extension Color {
         Color("appTint", bundle: .module)
     }
 
+    public static var appBackground: Color {
+        Color("appBackground", bundle: .module)
+    }
+
+    public static var appRowBackground: Color {
+        Color("appRowBackground", bundle: .module)
+    }
+
     public static var pageMarkerTint: Color {
-        Color(UIColor { collection in
-            collection.userInterfaceStyle == .dark ? UIColor(rgb: 0x039F85) : UIColor(rgb: 0x004D40)
-        })
+        .appIdentity
+    }
+}
+
+public extension View {
+    @ViewBuilder
+    func hideFormBackground() -> some View {
+        if #available(iOS 16.0, *) {
+            self.scrollContentBackground(.hidden)
+        } else {
+            self
+        }
     }
 }
 

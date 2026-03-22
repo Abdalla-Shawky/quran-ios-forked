@@ -26,10 +26,11 @@ public struct NoorList<Content: View>: View {
         configureList {
             List {
                 content
+                    .listRowBackground(Color.appRowBackground)
             }
         }
-
-        .listStyle(.insetGrouped)
+        .hideFormBackground()
+        .background(Color.appBackground)
     }
 
     // MARK: Private

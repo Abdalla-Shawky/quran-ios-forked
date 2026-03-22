@@ -12,6 +12,7 @@ import Localization
 import QuranProfileService
 import ReadingSelectorFeature
 import SettingsService
+import NoorUI
 import SwiftUI
 import TranslationsFeature
 import UIKit
@@ -39,6 +40,7 @@ public struct SettingsBuilder {
         )
         let view = SettingsRootView(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
+        viewController.view.backgroundColor = UIColor(Color.appBackground)
         viewController.title = lAndroid("menu_settings")
         return viewController
     }
