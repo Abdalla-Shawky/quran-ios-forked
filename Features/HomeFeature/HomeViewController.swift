@@ -48,12 +48,13 @@ final class HomeViewController: UIHostingController<HomeView> {
     }
 
     private func configureNavigationBarButtons() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage.symbol("books.vertical.fill"),
-            style: .plain,
-            target: self,
-            action: #selector(openReadingSelectors)
-        )
+        // TODO: Re-enable mushaf selector when all reading images are bundled
+        // navigationItem.rightBarButtonItem = UIBarButtonItem(
+        //     image: UIImage.symbol("books.vertical.fill"),
+        //     style: .plain,
+        //     target: self,
+        //     action: #selector(openReadingSelectors)
+        // )
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage.symbol("arrow.up.arrow.down"),

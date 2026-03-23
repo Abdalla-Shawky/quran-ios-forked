@@ -55,14 +55,15 @@ private struct SettingsRootViewUI: View {
                 }
             }
 
-            NoorBasicSection {
-                NoorListItem(
-                    image: .init(.mushafs),
-                    title: .text(l("reading.selector.title")),
-                    accessory: .disclosureIndicator,
-                    action: navigateToReadingSelector
-                )
-            }
+            // TODO: Re-enable mushaf selector when all reading images are bundled
+            // NoorBasicSection {
+            //     NoorListItem(
+            //         image: .init(.mushafs),
+            //         title: .text(l("reading.selector.title")),
+            //         accessory: .disclosureIndicator,
+            //         action: navigateToReadingSelector
+            //     )
+            // }
 
             NoorBasicSection {
                 NoorListItem(
