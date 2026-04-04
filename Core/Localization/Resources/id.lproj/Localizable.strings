@@ -1,0 +1,203 @@
+/*
+  Bahasa Indonesia localization for quran-ios-forked
+ */
+
+
+// MARK: - General
+
+"button.done" = "Selesai";
+"button.delete" = "Hapus";
+
+// MARK: - Errors
+
+"error.dialog.title" = "Kesalahan";
+"error.message.connection_lost" = "Koneksi internet terputus. Pindah ke lokasi dengan koneksi yang lebih stabil, atau tunggu hingga koneksi kembali stabil.";
+"error.message.international_roaming_off" = "Roaming internasional tidak diizinkan. Ubah pengaturan roaming internasional, atau nyalakan Wi-Fi.";
+"error.message.not_connected_to_internet" = "Tidak terhubung ke internet. Nyalakan Wi-Fi, atau izinkan koneksi data seluler.";
+"error.message.general" = "Oops! Terjadi kesalahan. Silakan coba lagi.";
+"error.message.no_disk_space" = "Tidak ada ruang penyimpanan yang tersedia untuk menyimpan unduhan.";
+
+// MARK: - Quran
+
+"ayah" = "Ayat";
+"surah" = "Surah";
+"quran_alquran" = "Al-Quran";
+
+// MARK: - Translation
+
+"translation.text-type.translation" = "Terjemahan";
+"translation.text-type.transliteration" = "Transliterasi";
+"translation.selectedTranslations" = "Terpilih";
+"translation.translator" = "Penerjemah: ";
+"translation.text.see-referenced-verse" = "Lihat ayat %d.";
+"translation.text.read-more" = "Baca selengkapnya";
+"translation.text.ayah-number" = "%d:%d";
+"translation.text.footnote-number" = "[%d]";
+"translation.text.footnote-title" = "Catatan kaki #%d";
+"error.translation.text-retrieval" = "Oops! Terjadi kesalahan. Kami tidak dapat mengambil terjemahan.";
+"error.translation.text-not-available" = "Tidak ada terjemahan yang tersedia untuk Ayat ini.";
+
+// MARK: - Search
+
+"search.recents.title" = "Pencarian terbaru";
+"search.popular.title" = "Coba cari dengan";
+"search.placeholder.text" = "Surah, ayat, terjemahan, tafsir, dan angka";
+"search.result.count" = "%@ (%d)";
+
+// MARK: - Settings
+
+"setting.write_review" = "Tulis ulasan di App Store...";
+"setting.contact_us" = "Hubungi Kami";
+"setting.donate" = "Donasi";
+"setting.share_app" = "Bagikan aplikasi...";
+"setting.app_version" = "Versi Aplikasi";
+
+// MARK: - Quran Menu
+
+"menu.arabic" = "Arab";
+"menu.translation" = "Terjemahan/Tafsir";
+"menu.select_translation" = "Pilih terjemahan/tafsir";
+"menu.pointer" = "Penunjuk terjemahan kata";
+"menu.pointer.select_translation" = "Menampilkan penunjuk";
+"menu.fontSizeLetter" = "A";
+"menu.translationFontSize" = "Ukuran terjemahan";
+"menu.arabicFontSize" = "Ukuran Quran";
+"menu.twoPages" = "2 halaman berdampingan (dalam lanskap)";
+"menu.verticalScrolling" = "Gulir vertikal";
+"menu.theme_settings" = "Tema & Pengaturan";
+
+// MARK: - Theme
+
+"theme.light" = "Terang";
+"theme.dark" = "Gelap";
+"theme.auto" = "Otomatis";
+"theme.auto.message" = "Aplikasi Quran akan mengikuti pengaturan tampilan iPhone Anda";
+
+// MARK: - Tabs
+
+"tab.notes" = "Catatan";
+
+// MARK: - Update
+
+"update.filesystem.title" = "Memperbarui basis data...";
+"downloading_title" = "Mengunduh…";
+
+// MARK: - Reciters
+
+"reciters.title" = "Pilih qari untuk didengarkan";
+"reciters.recent" = "Baru-baru ini";
+"reciters.downloaded" = "Diunduh";
+"reciters.all" = "Semua";
+
+// MARK: - Audio
+
+"audio.playing.action.modify" = "Ubah";
+"audio.playing.message" = "Memutar audio dari %@ hingga %@";
+"audio.downloading.message" = "Mengunduh audio dari %@ ke %@";
+
+"audio.playing-verses.label" = "Memutar Ayat";
+"audio.adjust-end-verse-to-the-end.label" = "Sesuaikan ayat akhir ke penghujung";
+
+"audio.select-start-verse" = "Pilih Ayat Awal";
+"audio.select-end-verse" = "Pilih Ayat Akhir";
+
+"audio.download-play-amount" = "Unduh/Putar hingga";
+"audio.download-play-amount.description" = "Saat memutar audio, akan diputar hingga akhir";
+
+// MARK: - Bookmarks
+
+"bookmarks.no-data.title" = "Menambahkan Bookmark...";
+"bookmarks.no-data.text" = "Saat Anda membaca Al-Quran, ketuk tombol Bookmark untuk menandai halaman saat ini.";
+"bookmarks.delete-all" = "Hapus Semua";
+"bookmarks.delete-all.confirmation" = "Apakah Anda yakin ingin menghapus semua bookmark?";
+
+// MARK: - Notes
+
+"notes.no-data.title" = "Menambahkan Sorotan Ayah...";
+"notes.no-data.text" = "Tekan dan tahan pada Ayah. Anda dapat memperluas pilihan untuk mencakup beberapa Ayat, lalu ketuk tombol Bookmark.";
+"notes.verses-count" = "(+%d ayat)";
+"notes.delete.alert.title" = "Hapus Sorotan";
+"notes.delete.alert.body" = "Catatan terkait juga akan dihapus.";
+"notes.icloud.alert.title" = "Sinkronisasi iCloud";
+"notes.icloud.alert.body" = "Aplikasi menggunakan iCloud untuk menyinkronkan bookmark & catatan di semua perangkat Anda. Anda dapat menonaktifkannya dari pengaturan iCloud perangkat Anda.";
+
+// MARK: - Ayah Menu
+
+"ayah.menu.copy" = "Salin";
+"ayah.menu.share" = "Bagikan...";
+"ayah.menu.play-end-juz" = "hingga akhir Juz'";
+"ayah.menu.play-end-surah" = "hingga akhir Surah";
+"ayah.menu.play-end-page" = "hingga akhir halaman";
+"ayah.menu.play-end-quran" = "hingga akhir Al-Quran";
+"ayah.menu.repeat" = "Ulangi";
+"ayah.menu.selected-verse" = "ayat yang dipilih";
+"ayah.menu.selected-verses" = "ayat-ayat yang dipilih";
+"ayah.menu.highlight" = "Sorot";
+"ayah.menu.highlight-select-color" = "pilih warna";
+"ayah.menu.add-note" = "Tambah catatan";
+"ayah.menu.edit-note" = "Edit catatan";
+"ayah.menu.delete-note" = "Hapus catatan";
+"ayah.menu.delete-highlight" = "Hapus sorotan";
+
+// MARK: - Reading Selector
+
+"reading.selector.selectMushaf.short" = "Pilih";
+"reading.selector.selectMushaf.long" = "Tetapkan sebagai Mushaf saat ini";
+"reading.selector.title" = "Pilih Mushaf";
+"reading.selector.selection-description" = "Ketuk pada Mushaf untuk informasi lebih lanjut.";
+"reading.selector.property.hafs" = "Mushaf Hafs";
+"reading.selector.property.pages.604" = "604 halaman";
+"reading.selector.property.lines.15" = "halaman 15 baris";
+"reading.selector.property.word-translation.supported" = "Terjemahan kata per kata";
+"reading.selector.property.word-translation.not-supported" = "Tidak ada terjemahan kata per kata";
+
+// Hafs 1405
+"reading.hafs-1405.title" = "Hafs, Madinah klasik, 1405 H";
+"reading.hafs-1405.description" = "Mushaf Hafs klasik yang diterbitkan di Madinah pada tahun 1405 Hijriah. Aplikasi ini menawarkan versi ini untuk waktu yang lama.\nDari Kompleks Percetakan Al-Quran Raja Fahd.";
+"reading.hafs-1405.issue" = "Diterbitkan pada tahun 1405 Hijriah";
+
+// Hafs 1421
+"reading.hafs-1421.title" = "Hafs, Madinah, 1421 H";
+"reading.hafs-1421.description" = "Mushaf Hafs yang diterbitkan di Madinah pada tahun 1421 Hijriah. Dari Kompleks Percetakan Al-Quran Raja Fahd.";
+"reading.hafs-1421.issue" = "Diterbitkan pada tahun 1421 Hijriah";
+
+// Hafs 1440
+"reading.hafs-1440.title" = "Hafs, Madinah, 1440 H";
+"reading.hafs-1440.description" = "Mushaf Hafs yang diterbitkan di Madinah pada tahun 1440 Hijriah. Dari Kompleks Percetakan Al-Quran Raja Fahd.";
+"reading.hafs-1440.issue" = "Diterbitkan pada tahun 1440 Hijriah";
+
+// Hafs Tajweed
+"reading.tajweed.title" = "Hafs, Tajwid";
+"reading.tajweed.description" = "Mushaf Hafs Tajwid. Al-Quran Al-Karim - Edisi Dar al-Marefa.";
+
+// MARK: - Diagnostics
+
+"diagnostics.title" = "Diagnostik";
+"diagnostics.details" = "Pengaturan ini digunakan oleh pengembang aplikasi khusus untuk keperluan debugging dan diagnostik.";
+
+"diagnostics.share_app_logs" = "Bagikan log aplikasi";
+"diagnostics.enable_debug_logs" = "Aktifkan logging debug";
+"diagnostics.enable_debug_logs.details" = "Pengaturan akan berlaku pada restart aplikasi berikutnya.";
+
+// MARK: - What's new
+
+"new.title" = "Yang baru";
+"new.action" = "Lanjutkan";
+
+"new.mushafs" = "Mushaf Baru:";
+"new.mushafs.details" = "* Mushaf Hafs Tajwid: Al-Quran Al-Karim - Edisi Dar al-Marefa.\n* Mushaf Madinah 1421 hijri.\n* Mushaf Madinah 1440 hijri.\n* Selain itu, terus nikmati versi klasik 1405 hijri.";
+
+"new.reciters" = "Qari Baru:";
+"new.reciters.details" = "* %%Readers:qari_abdulhadi_kanakeri_gapless%%\n* %%Readers:qari_ahmed_al_nufais_gapless%%\n* %%Readers:qari_alijon_qari_gapless%%\n* %%Readers:qari_badr_al_turki_gapless%%\n* %%Readers:qari_farman_shawani_gapless%%\n* %%Readers:qari_idrees_abkar_gapless%%\n* %%Readers:qari_luhaidan_gapless%%\n* %%Readers:qari_peshawa_qadir_al_qurdi_gapless%%\n* %%Readers:qari_raad_al_kurdi_gapless%%";
+
+"new.miscellaneous" = "Lain-lain:";
+"new.miscellaneous.details" = "* Tampilan aplikasi diperbarui.\n* Fitur pencarian ditingkatkan (algoritma baru segera hadir).\n* Dukungan lokalisasi Bahasa Vietnam.\n* Akses opsi audio lanjutan tersedia saat tidak ada bacaan yang diputar.\n* Aplikasi kini open source: https://github.com/quran/quran-ios";
+
+"new.audio_upgrades" = "Audio:";
+"new.audio_upgrades.details" = "* Kontrol kecepatan bacaan yang dapat disesuaikan: 0.5x, 0.75x, 1x, 1.25x, 1.5x.\n* Pemutaran mengingat kecepatan pilihan Anda.";
+
+"new.personalization" = "Tema Membaca:";
+"new.personalization.details" = "* Dukungan untuk berbagai tema. Buka halaman Quran -> Menu kanan atas -> Tema & Pengaturan.\n* Gunakan 'Original' jika Anda ingin kembali ke gaya sebelumnya.";
+
+"new.library_navigation" = "Perpustakaan & Navigasi:";
+"new.library_navigation.details" = "* Urutkan surah dan juz di Beranda, dan tampilkan nomor surah agar Anda dapat melompat ke yang dibutuhkan lebih cepat.";

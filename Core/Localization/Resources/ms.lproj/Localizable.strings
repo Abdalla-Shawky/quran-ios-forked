@@ -40,6 +40,9 @@
 "translation.text.see-referenced-verse" = "Lihat ayat %d.";
 // Metadata: Translated by ChatGPT; human review required.
 "translation.text.read-more" = "Baca lagi";
+"translation.text.ayah-number" = "%d:%d";
+"translation.text.footnote-number" = "[%d]";
+"translation.text.footnote-title" = "Nota kaki #%d";
 "error.translation.text-retrieval" = "Maaf! Sesuatu yang tidak diingini terjadi. Kami tidak dapat menjumpai terjemahannya.";
 "error.translation.text-not-available" = "Tiada terjemahan untuk Ayat ini.";
 
@@ -145,6 +148,8 @@
 "bookmarks.no-data.title" = "Menambah penanda buku...";
 // Metadata: Translated by ChatGPT; human review required.
 "bookmarks.no-data.text" = "Ketika anda membaca Al-Quran, tekan butang penanda buku untuk menandakan halaman semasa.";
+"bookmarks.delete-all" = "Padam Semua";
+"bookmarks.delete-all.confirmation" = "Adakah anda pasti mahu memadam semua penanda buku?";
 
 // MARK: - Notes
 
