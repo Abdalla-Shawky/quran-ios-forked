@@ -11,7 +11,7 @@ import SwiftUI
 public enum ContentDimension {
     // MARK: Public
 
-    public static let interSpacing: CGFloat = spacing
+    public static var interSpacing: CGFloat { spacing }
     public static let interPageSpacing: CGFloat = 12
 
     public static func insets(of view: UIView) -> NSDirectionalEdgeInsets {
@@ -36,5 +36,5 @@ public enum ContentDimension {
 
     // MARK: Internal
 
-    static let spacing: CGFloat = 2
+    static var spacing: CGFloat { 2 * QuranViewConfiguration.shared.readableInsetsScale }
 }

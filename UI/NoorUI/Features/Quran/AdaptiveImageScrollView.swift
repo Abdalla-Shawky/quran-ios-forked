@@ -56,8 +56,10 @@ public struct AdaptiveImageScrollView<Header: View, Footer: View>: View {
                             Color.clear
                         }
                     }
+                    .padding(.horizontal, -zoomPadding(geometry: geometry))
                     .readableInsetsPadding(.horizontal)
                     .frame(height: imageHeight(geometry: geometry))
+                    .clipped()
 
                     footer
                         .onSizeChange { footerSize = $0 }
@@ -89,6 +91,13 @@ public struct AdaptiveImageScrollView<Header: View, Footer: View>: View {
         } else {
             ScrollView(content: content)
         }
+    }
+
+    private func zoomPadding(geometry: GeometryProxy) -> CGFloat {
+        let scale = QuranViewConfiguration.shared.pageContentScale
+        guard scale > 1 else { return 0 }
+        let effectiveWidth = geometry.size.width - readableInsets.leading - readableInsets.trailing
+        return effectiveWidth * (scale - 1) / 2
     }
 
     private func imageGeometrySize(from geometry: GeometryProxy) -> CGSize {

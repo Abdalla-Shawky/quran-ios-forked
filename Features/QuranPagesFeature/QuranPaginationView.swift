@@ -100,11 +100,14 @@ private struct QuranDoublePaginationView<Content: View>: View {
             selection: doublePageSelection
         ) {
             ForEach(doublePages) { doublePage in
+                let padding = QuranViewConfiguration.shared.separatorContentPadding
                 HStack(spacing: 0) {
                     QuranSeparators.PageSideSeparator(leading: true)
                     content(doublePage.first)
+                        .padding(.leading, padding)
                     QuranSeparators.PageMiddleSeparator()
                     content(doublePage.second)
+                        .padding(.trailing, padding)
                     QuranSeparators.PageSideSeparator(leading: false)
                 }
             }
@@ -147,10 +150,12 @@ private struct QuranSinglePaginationView<Content: View>: View {
         ) {
             ForEach(pages) { page in
                 Group {
+                    let padding = QuranViewConfiguration.shared.separatorContentPadding
                     if isRightSide(page) {
                         HStack(spacing: 0) {
                             QuranSeparators.PageSideSeparator(leading: true)
                             content(page)
+                                .padding(.leading, padding)
                             QuranSeparators.PageMiddleSeparator()
                                 .offset(x: middleOffset)
                                 .padding(.leading, -middleOffset)
@@ -158,6 +163,7 @@ private struct QuranSinglePaginationView<Content: View>: View {
                     } else {
                         HStack(spacing: 0) {
                             content(page)
+                                .padding(.trailing, padding)
                             QuranSeparators.PageSideSeparator(leading: false)
                         }
                     }
