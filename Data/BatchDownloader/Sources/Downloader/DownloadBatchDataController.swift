@@ -31,14 +31,23 @@ func describe(_ task: NetworkSessionTask) -> String {
 struct SingleTaskResponse {
     let request: DownloadRequest
     let response: DownloadBatchResponse
+    /// `false` when the batch was submitted under a policy that opted out
+    /// of persistence — the session delegate uses this to discard the temp
+    /// file rather than moving it to the request's destination.
+    let isPersistent: Bool
 }
 
 actor DownloadBatchDataController {
     // MARK: Lifecycle
 
-    init(maxSimultaneousDownloads: Int, persistence: DownloadsPersistence) {
+    init(
+        maxSimultaneousDownloads: Int,
+        persistence: DownloadsPersistence,
+        policy: DownloadPersistencePolicy = AlwaysPersistDownloadPolicy()
+    ) {
         self.maxSimultaneousDownloads = maxSimultaneousDownloads
         self.persistence = persistence
+        self.policy = policy
     }
 
     // MARK: Internal
@@ -66,7 +75,8 @@ actor DownloadBatchDataController {
     func downloadRequestResponse(for task: NetworkSessionTask) async -> SingleTaskResponse? {
         for batch in batches {
             if let request = await batch.downloadRequest(for: task) {
-                return SingleTaskResponse(request: request, response: batch)
+                let isPersistent = !ephemeralBatchIds.contains(batch.batchId)
+                return SingleTaskResponse(request: request, response: batch, isPersistent: isPersistent)
             }
         }
         return nil
@@ -74,9 +84,24 @@ actor DownloadBatchDataController {
 
     func download(_ batchRequest: DownloadBatchRequest) async throws -> DownloadBatchResponse {
         logger.info("Batching \(batchRequest.requests.count) to download.")
-        // save to persistence
-        let batch = try await persistence.insert(batch: batchRequest)
-        logger.info("Batch assigned Id = \(batch.id).")
+
+        let batch: DownloadBatch
+        if policy.shouldPersist(batchRequest) {
+            // save to persistence
+            batch = try await persistence.insert(batch: batchRequest)
+            logger.info("Batch assigned Id = \(batch.id).")
+        } else {
+            // ephemeral: synthesize an in-memory batch with a guaranteed-unique
+            // negative id (SQLite auto-increment never produces negatives, so
+            // there is no collision with persisted batches).
+            let id = nextEphemeralBatchId()
+            let downloads = batchRequest.requests.map { request in
+                Download(taskId: nil, request: request, status: .downloading, batchId: id)
+            }
+            batch = DownloadBatch(id: id, downloads: downloads)
+            ephemeralBatchIds.insert(id)
+            logger.info("Batch assigned ephemeral Id = \(batch.id).")
+        }
 
         // create the response
         let response = await createResponse(forBatch: batch)
@@ -85,6 +110,27 @@ actor DownloadBatchDataController {
         await startPendingTasksIfNeeded()
 
         return response
+    }
+
+    /// Wipes every persisted batch and download row through the persistence
+    /// layer. Surfaced via `DownloadManager.purgePersistedDownloads()` for
+    /// host-side "subscription expired, drop offline assets" flows.
+    func purgePersistedDownloads() async throws {
+        try await persistence.deleteAll()
+    }
+
+    /// Snapshot of every destination + resume path currently persisted.
+    /// The host removes these files from disk before wiping the SQLite rows.
+    func persistedDownloadPaths() async throws -> [RelativeFilePath] {
+        let batches = try await persistence.retrieveAll()
+        var paths: [RelativeFilePath] = []
+        for batch in batches {
+            for download in batch.downloads {
+                paths.append(download.request.destination)
+                paths.append(download.request.resumePath)
+            }
+        }
+        return paths
     }
 
     func downloadCompleted(_ response: SingleTaskResponse) async {
@@ -116,9 +162,26 @@ actor DownloadBatchDataController {
 
     private let maxSimultaneousDownloads: Int
     private let persistence: DownloadsPersistence
+    private let policy: DownloadPersistencePolicy
     private weak var session: NetworkSession?
 
     private var batches: Set<DownloadBatchResponse> = []
+
+    /// Tracks batches that bypassed `persistence.insert` because the policy
+    /// denied persistence. Update / delete persistence calls are skipped for
+    /// these ids; the session delegate also uses this set (via
+    /// `SingleTaskResponse.isPersistent`) to discard temp files.
+    private var ephemeralBatchIds: Set<Int64> = []
+
+    /// Monotonic source of negative ids for ephemeral batches. Decrements on
+    /// every read; SQLite auto-increment never produces negatives so there
+    /// is no risk of collision with persisted batches.
+    private var nextEphemeralId: Int64 = -1
+
+    private func nextEphemeralBatchId() -> Int64 {
+        defer { nextEphemeralId -= 1 }
+        return nextEphemeralId
+    }
 
     private var initialRunningTasks = AsyncInitializer()
 
@@ -177,7 +240,11 @@ actor DownloadBatchDataController {
     private func cleanUpForCompletedBatch(_ response: DownloadBatchResponse) async {
         // delete the completed response
         batches.remove(response)
-        await run("DeleteBatch") { try await $0.delete(batchIds: [response.batchId]) }
+        if ephemeralBatchIds.remove(response.batchId) == nil {
+            // Persisted batches need their SQLite row removed; ephemeral
+            // batches were never inserted in the first place.
+            await run("DeleteBatch") { try await $0.delete(batchIds: [response.batchId]) }
+        }
 
         // Start pending tasks
         await startPendingTasksIfNeeded()
@@ -223,7 +290,8 @@ actor DownloadBatchDataController {
                     break
                 }
 
-                let response = SingleTaskResponse(request: request, response: batch)
+                let isPersistent = !ephemeralBatchIds.contains(batch.batchId)
+                let response = SingleTaskResponse(request: request, response: batch, isPersistent: isPersistent)
                 await updateDownloadPersistence(response)
                 downloadTasks.append((task, response))
             }
@@ -238,6 +306,8 @@ actor DownloadBatchDataController {
     }
 
     private func updateDownloadPersistence(_ response: SingleTaskResponse) async {
+        // Ephemeral batches have no SQLite rows to update.
+        guard response.isPersistent else { return }
         await run("UpdateDownload") {
             try await $0.update(downloads: [await response.response.download(of: response.request)])
         }

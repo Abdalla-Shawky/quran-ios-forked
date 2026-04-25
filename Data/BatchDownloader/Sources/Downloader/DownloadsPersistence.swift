@@ -23,4 +23,9 @@ protocol DownloadsPersistence: Sendable {
     func insert(batch: DownloadBatchRequest) async throws -> DownloadBatch
     func update(downloads: [Download]) async throws
     func delete(batchIds: [Int64]) async throws
+
+    /// Removes every batch and download row. Used by
+    /// `DownloadManager.purgePersistedDownloads()` to support host-side
+    /// "wipe all offline assets" flows (e.g. when a subscription expires).
+    func deleteAll() async throws
 }

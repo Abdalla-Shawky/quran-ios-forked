@@ -35,6 +35,24 @@ public final class DownloadManager: Sendable {
     ) {
         self.init(
             maxSimultaneousDownloads: maxSimultaneousDownloads,
+            configuration: configuration,
+            downloadsURL: downloadsURL,
+            policy: AlwaysPersistDownloadPolicy()
+        )
+    }
+
+    /// Convenience init that lets the host inject a `DownloadPersistencePolicy`
+    /// so individual batches can opt out of on-disk persistence (for example,
+    /// to gate offline audio behind a paid subscription while still letting
+    /// translation databases persist as usual).
+    public convenience init(
+        maxSimultaneousDownloads: Int,
+        configuration: URLSessionConfiguration,
+        downloadsURL: URL,
+        policy: DownloadPersistencePolicy
+    ) {
+        self.init(
+            maxSimultaneousDownloads: maxSimultaneousDownloads,
             sessionFactory: {
                 URLSession(
                     configuration: configuration,
@@ -42,7 +60,8 @@ public final class DownloadManager: Sendable {
                     delegateQueue: $1
                 )
             },
-            persistence: GRDBDownloadsPersistence(fileURL: downloadsURL)
+            persistence: GRDBDownloadsPersistence(fileURL: downloadsURL),
+            policy: policy
         )
     }
 
@@ -50,11 +69,13 @@ public final class DownloadManager: Sendable {
         maxSimultaneousDownloads: Int,
         sessionFactory: @escaping SessionFactory,
         persistence: DownloadsPersistence,
-        fileManager: FileSystem = DefaultFileSystem()
+        fileManager: FileSystem = DefaultFileSystem(),
+        policy: DownloadPersistencePolicy = AlwaysPersistDownloadPolicy()
     ) {
         let dataController = DownloadBatchDataController(
             maxSimultaneousDownloads: maxSimultaneousDownloads,
-            persistence: persistence
+            persistence: persistence,
+            policy: policy
         )
         self.dataController = dataController
         self.sessionFactory = sessionFactory
@@ -86,6 +107,25 @@ public final class DownloadManager: Sendable {
         logger.debug("Requested to download \(batch.requests.map(\.url.absoluteString))")
         let result = try await dataController.download(batch)
         return result
+    }
+
+    /// Wipes every persisted batch and the on-disk files those batches
+    /// produced. Intended for host-side flows that need to drop offline
+    /// assets when an entitlement (e.g. a paid subscription) is lost.
+    ///
+    /// Files at request destinations are read out of the persistence layer
+    /// before the SQLite rows are deleted, so paths the package owns are
+    /// removed without the host having to know them.
+    public func purgePersistedDownloads() async throws {
+        // Read paths first so that even if file deletion partially fails we
+        // still wipe the SQLite rows below — leaving orphaned files is far
+        // less damaging than leaving stale rows pointing to deleted files.
+        let paths = try await dataController.persistedDownloadPaths()
+        let fileSystem: FileSystem = DefaultFileSystem()
+        for path in paths {
+            try? fileSystem.removeItem(at: path)
+        }
+        try await dataController.purgePersistedDownloads()
     }
 
     public func cancel(downloads: [DownloadBatchResponse]) async {

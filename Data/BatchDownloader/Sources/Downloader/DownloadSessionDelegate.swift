@@ -69,6 +69,16 @@ actor DownloadSessionDelegate: NetworkSessionDelegate {
             return
         }
 
+        // Ephemeral batch (host policy denied persistence): the bytes have
+        // streamed through the URLSession into the temp location. Discard
+        // the temp file rather than moving it to the request's destination.
+        // The system will also reap the file automatically, but we remove
+        // it eagerly so we don't accumulate temp files between launches.
+        if !response.isPersistent {
+            try? FileManager.default.removeItem(at: location)
+            return
+        }
+
         let resumePath = response.request.resumePath
         let destinationURL = response.request.destination
 

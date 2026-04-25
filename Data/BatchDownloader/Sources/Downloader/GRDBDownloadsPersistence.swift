@@ -73,6 +73,16 @@ struct GRDBDownloadsPersistence: DownloadsPersistence {
         }
     }
 
+    func deleteAll() async throws {
+        try await db.write { db in
+            // The `grdbDownload` rows cascade on the batch FK, so wiping the
+            // batch table is sufficient. We delete both for defence in depth
+            // in case the cascade trigger is missing in older databases.
+            try GRDBDownload.deleteAll(db)
+            try GRDBDownloadBatch.deleteAll(db)
+        }
+    }
+
     // MARK: Private
 
     private var migrator: DatabaseMigrator {
